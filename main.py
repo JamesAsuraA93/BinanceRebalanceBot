@@ -57,8 +57,9 @@ def Rebalance(t,b,bn):
   BUSD_V = Balance['BUSD']['free']
 
   if V_ADA >= t:  # V >= 82
-    bn.create_market_sell_order('ADA/BUSD',10)
-    print("SELL ADA @Marketprice 10$")
+    orderSell = (10/ADA)+0.13
+    bn.create_market_sell_order('ADA/BUSD',orderSell)
+    print(f"SELL ADA @Marketprice {orderSell}$")
     print(f"ราคา ADA = {ADA}")
     print(f"จำนวน ADA ที่มี = {ADA_V}")
     print(f"ADA รวมแล้วมี {V_ADA} ~$")
@@ -71,8 +72,9 @@ def Rebalance(t,b,bn):
     print("วินาที : %d" % now.second)
   
   elif V_ADA <= b:  # V <= 78
-    bn.create_market_buy_order('ADA/BUSD',10)
-    print("BUY ADA @Marketprice 10$")
+    orderBuy = (10/ADA)+0.13
+    bn.create_market_buy_order('ADA/BUSD',orderBuy)
+    print(f"BUY ADA @Marketprice {orderBuy}$")
     print(f"ราคา ADA = {ADA}")
     print(f"จำนวน ADA ที่มี = {ADA_V}")
     print(f"ADA รวมแล้วมี {V_ADA} ~$")
