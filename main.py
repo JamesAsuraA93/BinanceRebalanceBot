@@ -125,5 +125,5 @@ while 1:
   now = datetime.datetime.now()
   print("Start Rebalance")
   Rebalance(top,bottom,bn)
-  print("\n"*3)
+  print("\n")
   time.sleep(60)
