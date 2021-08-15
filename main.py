@@ -53,10 +53,20 @@ def Rebalance(t,b,bn):
   ADA = ADA_info['ADA/BUSD']['last']  # ราคา ADA ต่อ BUSD
   ADA_V = Balance['ADA']['free']  # จำนวน ADA ที่มี
   V_ADA = ADA * ADA_V  # จำนวน ADA ต่อ BUSD ที่มี $
-
   BUSD_V = Balance['BUSD']['free']
 
-  if V_ADA > t:  # V >= 82 - 1
+  s,h,m,d,mth = now.second,now.hour,now.minute,now.day,now.month
+
+  GMT = 7
+  temp = (h+GMT) // 24
+  h += GMT
+  if h > 24:
+    h -= 24
+  else:
+    pass
+  d += temp
+
+  if V_ADA > t:  # V > 82 - 1
     orderSell = (10/ADA)+0.13
     bn.create_market_sell_order('ADA/BUSD',orderSell)
     print(f"SELL ADA @Marketprice {orderSell}$")
@@ -64,15 +74,10 @@ def Rebalance(t,b,bn):
     print(f"จำนวน ADA ที่มี = {ADA_V}")
     print(f"ADA รวมแล้วมี {V_ADA} ~$")
     print(f"BUSD รวมแล้วมี {BUSD_V} ~$")
-    print("เวลา GMT +7")
-    print("เดือน : %d" % now.month)
-    print("วันที่ : %d" % now.day)
-    print("ชั่งโมง : %d" % now.hour)
-    print("นาที : %d" % now.minute)
-    print("วินาที : %d" % now.second)
+    print(f"วันเวลา {h}:{m}:{s} วันที่ {d} เดือน {mth}")
     time.sleep(2)
   
-  elif V_ADA < b:  # V <= 68 + 1
+  elif V_ADA < b:  # V < 68 + 1
     orderBuy = (10/ADA)+0.13
     bn.create_market_buy_order('ADA/BUSD',orderBuy)
     print(f"BUY ADA @Marketprice {orderBuy}$")
@@ -80,22 +85,14 @@ def Rebalance(t,b,bn):
     print(f"จำนวน ADA ที่มี = {ADA_V}")
     print(f"ADA รวมแล้วมี {V_ADA} ~$")
     print(f"BUSD รวมแล้วมี {BUSD_V} ~$")
-    print("เวลา GMT +7")
-    print("เดือน : %d" % now.month)
-    print("วันที่ : %d" % now.day)
-    print("ชั่งโมง : %d" % now.hour)
-    print("นาที : %d" % now.minute)
-    print("วินาที : %d" % now.second)
+    print(f"วันเวลา {h}:{m}:{s} วันที่ {d} เดือน {mth}")
     time.sleep(2)
 
   else:
     print("นั่งทับมือ")
-    print("เวลา GMT +7")
-    print("เดือน : %d" % now.month)
-    print("วันที่ : %d" % now.day)
-    print("ชั่งโมง : %d" % now.hour)
-    print("นาที : %d" % now.minute)
-    print("วินาที : %d" % now.second)
+    print(f"ราคา ADA = {ADA}")
+    print(f"จำนวน ADA ที่มี = {ADA_V}")
+    print(f"วันเวลา {h}:{m}:{s} วันที่ {d} เดือน {mth}")
 
 
 def run():
@@ -124,10 +121,9 @@ bn = ccxt.binance({
   'secret': my_secret,  # API Secret
   'enableRateLimit': True,
 })
-
-while 1:
+print("Start Rebalance")
+while True:
   now = datetime.datetime.now()
-  print("Start Rebalance")
   Rebalance(top,bottom,bn)
   print("\n")
-  time.sleep(2)
+  time.sleep(3)
