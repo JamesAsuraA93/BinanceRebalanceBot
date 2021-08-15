@@ -56,7 +56,7 @@ def Rebalance(t,b,bn):
 
   BUSD_V = Balance['BUSD']['free']
 
-  if V_ADA >= t:  # V >= 82
+  if V_ADA > t:  # V >= 82 - 1
     orderSell = (10/ADA)+0.13
     bn.create_market_sell_order('ADA/BUSD',orderSell)
     print(f"SELL ADA @Marketprice {orderSell}$")
@@ -72,7 +72,7 @@ def Rebalance(t,b,bn):
     print("วินาที : %d" % now.second)
     time.sleep(2)
   
-  elif V_ADA <= b:  # V <= 78
+  elif V_ADA < b:  # V <= 68 + 1
     orderBuy = (10/ADA)+0.13
     bn.create_market_buy_order('ADA/BUSD',orderBuy)
     print(f"BUY ADA @Marketprice {orderBuy}$")
@@ -112,8 +112,8 @@ file = open('config.json')
 config = json.load(file)
 fix = int(config['fix']) # 75
 fee = int(config['rebal']) # 7
-top = fix+fee  # 82
-bottom = fix-fee  # 68
+top = (fix+fee) - 1  # 82 (-1)
+bottom = (fix-fee) + 1  # 68 (+1)
 
 my_API = os.environ['API']
 my_secret = os.environ['Secret']
@@ -130,4 +130,4 @@ while 1:
   print("Start Rebalance")
   Rebalance(top,bottom,bn)
   print("\n")
-  time.sleep(30)
+  time.sleep(2)
