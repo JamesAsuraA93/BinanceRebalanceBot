@@ -70,6 +70,7 @@ def Rebalance(t,b,bn):
     print("ชั่งโมง : %d" % now.hour)
     print("นาที : %d" % now.minute)
     print("วินาที : %d" % now.second)
+    time.sleep(2)
   
   elif V_ADA <= b:  # V <= 78
     orderBuy = (10/ADA)+0.13
@@ -85,6 +86,7 @@ def Rebalance(t,b,bn):
     print("ชั่งโมง : %d" % now.hour)
     print("นาที : %d" % now.minute)
     print("วินาที : %d" % now.second)
+    time.sleep(2)
 
   else:
     print("นั่งทับมือ")
@@ -128,4 +130,4 @@ while 1:
   print("Start Rebalance")
   Rebalance(top,bottom,bn)
   print("\n")
-  time.sleep(60)
+  time.sleep(30)
